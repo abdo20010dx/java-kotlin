@@ -22,6 +22,10 @@ class MainActivity : ComponentActivity() {
         theAgeInMinutes = findViewById(R.id.ageMinutes)
         val btnDatePicker:Button =findViewById((R.id.button))
         btnDatePicker.setOnClickListener {
+            var someObject = Something()
+            someObject.someVar = 5
+            println("__________${someObject.someVar}___________")
+
             clickDatePicker()
         }
 
@@ -64,12 +68,10 @@ val theDatePickerDialog = DatePickerDialog(this,lambdaDate ,year,month,dayOfMont
 }
 
 @Composable
-fun Greeting(name: String, modifier: () -> Unit) {
+fun Greeting( name: String, modifier: () -> Unit) {
 Greeting{
-    someParameter ->
-    run {
-        println(someParameter)
-    }
+    someParameter -> println("_________${someParameter}__________ll")
+
 }
 //    Text(
 //        text = "Hello $name!",
@@ -89,4 +91,16 @@ fun something():String{
 fun GreetingPreview() {
     AgeCalcTheme {
     }
+
+}
+    class Something:AnotherClass() {
+
+        var someVar = 1
+         set(value){
+             super.ssss()
+              field = value
+        }
+    }
+ open class AnotherClass {
+    fun ssss (){}
 }
