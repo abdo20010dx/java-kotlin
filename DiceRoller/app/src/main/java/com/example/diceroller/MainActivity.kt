@@ -1,6 +1,7 @@
 package com.example.diceroller
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -23,6 +24,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.example.diceroller.ui.theme.DiceRollerTheme
+import java.util.Timer
+import java.util.TimerTask
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,11 +64,27 @@ fun DiceWithButtonAndImage(modifier: Modifier = Modifier) {
         5 -> R.drawable.dice_5
         else -> R.drawable.dice_6
     }
+
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         Image(painter = painterResource(imageResource), contentDescription = result.toString())
 
         Button(
-            onClick = { result = (1..6).random() },
+            onClick = {
+                val theTimer = Timer()
+                var counter = 0
+                theTimer.scheduleAtFixedRate(object : TimerTask() {
+                    override fun run() {
+                        result = (1..6).random()
+                        if (counter == 10) {
+                            theTimer.cancel()
+                            counter = 0
+                        }
+                    counter++
+                    }
+                }, 0, 100)
+
+
+            },
         ) {
             Text(text = stringResource(R.string.roll), fontSize = 24.sp)
         }
